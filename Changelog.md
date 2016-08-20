@@ -36,7 +36,7 @@
  - Fix continueAfterResponse option
 
 ### 2.0.1
- - Add "WWW-Authenticate" header for invalidClient
+ - Add "WWW-Authenticate" header for invalid_client
 
 ### 2.0
  - Huge intrenal refactor
