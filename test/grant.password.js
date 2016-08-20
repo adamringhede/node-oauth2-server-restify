@@ -25,7 +25,7 @@ var bootstrap = function (oauthConfig) {
   var app = express(),
     oauth = oauth2server(oauthConfig || {
       model: {},
-      grants: ['password', 'refresh_token']
+      grants: ['password', 'refreshToken']
     });
 
   app.set('json spaces', 0);
@@ -56,9 +56,9 @@ describe('Granting with password grant type', function () {
       .post('/oauth/token')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        grant_type: 'password',
-        client_id: 'thom',
-        client_secret: 'nightworld'
+        grantType: 'password',
+        clientId: 'thom',
+        clientSecret: 'nightworld'
       })
       .expect(400, /missing parameters. \\"username\\" and \\"password\\"/i, done);
 
@@ -86,9 +86,9 @@ describe('Granting with password grant type', function () {
       .post('/oauth/token')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        grant_type: 'password',
-        client_id: 'thom',
-        client_secret: 'nightworld',
+        grantType: 'password',
+        clientId: 'thom',
+        clientSecret: 'nightworld',
         username: 'thomseddon',
         password: 'nightworld'
       })

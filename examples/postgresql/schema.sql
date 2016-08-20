@@ -29,36 +29,36 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: oauth_access_tokens; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: oauth_accessTokens; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
-CREATE TABLE oauth_access_tokens (
-    access_token text NOT NULL,
-    client_id text NOT NULL,
-    user_id uuid NOT NULL,
+CREATE TABLE oauth_accessTokens (
+    accessToken text NOT NULL,
+    clientId text NOT NULL,
+    userId uuid NOT NULL,
     expires timestamp without time zone NOT NULL
 );
 
 
 --
--- Name: oauth_clients; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: oauthClients; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
-CREATE TABLE oauth_clients (
-    client_id text NOT NULL,
-    client_secret text NOT NULL,
+CREATE TABLE oauthClients (
+    clientId text NOT NULL,
+    clientSecret text NOT NULL,
     redirect_uri text NOT NULL
 );
 
 
 --
--- Name: oauth_refresh_tokens; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: oauth_refreshTokens; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
-CREATE TABLE oauth_refresh_tokens (
-    refresh_token text NOT NULL,
-    client_id text NOT NULL,
-    user_id uuid NOT NULL,
+CREATE TABLE oauth_refreshTokens (
+    refreshToken text NOT NULL,
+    clientId text NOT NULL,
+    userId uuid NOT NULL,
     expires timestamp without time zone NOT NULL
 );
 
@@ -75,27 +75,27 @@ CREATE TABLE users (
 
 
 --
--- Name: oauth_access_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: oauth_accessTokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
-ALTER TABLE ONLY oauth_access_tokens
-    ADD CONSTRAINT oauth_access_tokens_pkey PRIMARY KEY (access_token);
-
-
---
--- Name: oauth_clients_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY oauth_clients
-    ADD CONSTRAINT oauth_clients_pkey PRIMARY KEY (client_id, client_secret);
+ALTER TABLE ONLY oauth_accessTokens
+    ADD CONSTRAINT oauth_accessTokens_pkey PRIMARY KEY (accessToken);
 
 
 --
--- Name: oauth_refresh_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: oauthClients_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
-ALTER TABLE ONLY oauth_refresh_tokens
-    ADD CONSTRAINT oauth_refresh_tokens_pkey PRIMARY KEY (refresh_token);
+ALTER TABLE ONLY oauthClients
+    ADD CONSTRAINT oauthClients_pkey PRIMARY KEY (clientId, clientSecret);
+
+
+--
+-- Name: oauth_refreshTokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
+--
+
+ALTER TABLE ONLY oauth_refreshTokens
+    ADD CONSTRAINT oauth_refreshTokens_pkey PRIMARY KEY (refreshToken);
 
 
 --

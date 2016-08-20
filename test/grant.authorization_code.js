@@ -25,7 +25,7 @@ var bootstrap = function (oauthConfig) {
   var app = express(),
     oauth = oauth2server(oauthConfig || {
       model: {},
-      grants: ['password', 'refresh_token']
+      grants: ['password', 'refreshToken']
     });
 
   app.set('json spaces', 0);
@@ -38,7 +38,7 @@ var bootstrap = function (oauthConfig) {
   return app;
 };
 
-describe('Granting with authorization_code grant type', function () {
+describe('Granting with authorizationCode grant type', function () {
   it('should detect missing parameters', function (done) {
     var app = bootstrap({
       model: {
@@ -49,22 +49,22 @@ describe('Granting with authorization_code grant type', function () {
           callback(false, true);
         }
       },
-      grants: ['authorization_code']
+      grants: ['authorizationCode']
     });
 
     request(app)
       .post('/oauth/token')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        grant_type: 'authorization_code',
-        client_id: 'thom',
-        client_secret: 'nightworld'
+        grantType: 'authorizationCode',
+        clientId: 'thom',
+        clientSecret: 'nightworld'
       })
       .expect(400, /no \\"code\\" parameter/i, done);
 
   });
 
-  it('should invalid authorization_code', function (done) {
+  it('should invalid authorizationCode', function (done) {
     var app = bootstrap({
       model: {
         getClient: function (id, secret, callback) {
@@ -77,22 +77,22 @@ describe('Granting with authorization_code grant type', function () {
           callback(false); // Fake invalid
         }
       },
-      grants: ['authorization_code']
+      grants: ['authorizationCode']
     });
 
     request(app)
       .post('/oauth/token')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        grant_type: 'authorization_code',
-        client_id: 'thom',
-        client_secret: 'nightworld',
+        grantType: 'authorizationCode',
+        clientId: 'thom',
+        clientSecret: 'nightworld',
         code: 'abc123'
       })
       .expect(400, /invalid code/i, done);
   });
 
-  it('should detect invalid client_id', function (done) {
+  it('should detect invalid clientId', function (done) {
     var app = bootstrap({
       model: {
         getClient: function (id, secret, callback) {
@@ -102,19 +102,19 @@ describe('Granting with authorization_code grant type', function () {
           callback(false, true);
         },
         getAuthCode: function (code, callback) {
-          callback(false, { client_id: 'wrong' });
+          callback(false, { clientId: 'wrong' });
         }
       },
-      grants: ['authorization_code']
+      grants: ['authorizationCode']
     });
 
     request(app)
       .post('/oauth/token')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        grant_type: 'authorization_code',
-        client_id: 'thom',
-        client_secret: 'nightworld',
+        grantType: 'authorizationCode',
+        clientId: 'thom',
+        clientSecret: 'nightworld',
         code: 'abc123'
       })
       .expect(400, /invalid code/i, done);
@@ -124,7 +124,7 @@ describe('Granting with authorization_code grant type', function () {
     var app = bootstrap({
       model: {
         getClient: function (id, secret, callback) {
-          callback(false, { client_id: 'thom' });
+          callback(false, { clientId: 'thom' });
         },
         grantTypeAllowed: function (clientId, grantType, callback) {
           callback(false, true);
@@ -136,16 +136,16 @@ describe('Granting with authorization_code grant type', function () {
           });
         }
       },
-      grants: ['authorization_code']
+      grants: ['authorizationCode']
     });
 
     request(app)
       .post('/oauth/token')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        grant_type: 'authorization_code',
-        client_id: 'thom',
-        client_secret: 'nightworld',
+        grantType: 'authorizationCode',
+        clientId: 'thom',
+        clientSecret: 'nightworld',
         code: 'abc123'
       })
       .expect(400, /code has expired/i, done);
@@ -155,7 +155,7 @@ describe('Granting with authorization_code grant type', function () {
     var app = bootstrap({
       model: {
         getClient: function (id, secret, callback) {
-          callback(false, { client_id: 'thom' });
+          callback(false, { clientId: 'thom' });
         },
         grantTypeAllowed: function (clientId, grantType, callback) {
           callback(false, true);
@@ -167,16 +167,16 @@ describe('Granting with authorization_code grant type', function () {
           });
         }
       },
-      grants: ['authorization_code']
+      grants: ['authorizationCode']
     });
 
     request(app)
       .post('/oauth/token')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        grant_type: 'authorization_code',
-        client_id: 'thom',
-        client_secret: 'nightworld',
+        grantType: 'authorizationCode',
+        clientId: 'thom',
+        clientSecret: 'nightworld',
         code: 'abc123'
       })
       .expect(400, /code has expired/i, done);
@@ -187,7 +187,7 @@ describe('Granting with authorization_code grant type', function () {
     var app = bootstrap({
       model: {
         getClient: function (id, secret, callback) {
-          callback(false, { client_id: 'thom' });
+          callback(false, { clientId: 'thom' });
         },
         grantTypeAllowed: function (clientId, grantType, callback) {
           callback(false, true);
@@ -210,19 +210,19 @@ describe('Granting with authorization_code grant type', function () {
           callback();
         }
       },
-      grants: ['authorization_code']
+      grants: ['authorizationCode']
     });
 
     request(app)
       .post('/oauth/token')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        grant_type: 'authorization_code',
-        client_id: 'thom',
-        client_secret: 'nightworld',
+        grantType: 'authorizationCode',
+        clientId: 'thom',
+        clientSecret: 'nightworld',
         code: 'abc123'
       })
-      .expect(200, /"access_token":"(.*)"/i, done);
+      .expect(200, /"accessToken":"(.*)"/i, done);
   });
 
 });

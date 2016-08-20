@@ -69,13 +69,13 @@ describe('Lockdown pattern', function() {
     var app = bootstrap({
       model: {
         getAccessToken: function (token, callback) {
-          callback(token !== 'thom', { access_token: token, expires: null });
+          callback(token !== 'thom', { accessToken: token, expires: null });
         }
       }
     });
 
     request(app)
-      .get('/private?access_token=thom')
+      .get('/private?accessToken=thom')
       .expect(200, /hello/i, done);
   });
 

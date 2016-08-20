@@ -25,7 +25,7 @@ var bootstrap = function (oauthConfig) {
   var app = express(),
     oauth = oauth2server(oauthConfig || {
       model: {},
-      grants: ['client_credentials']
+      grants: ['clientCredentials']
     });
 
   app.set('json spaces', 0);
@@ -38,7 +38,7 @@ var bootstrap = function (oauthConfig) {
   return app;
 };
 
-describe('Granting with client_credentials grant type', function () {
+describe('Granting with clientCredentials grant type', function () {
 
   // N.B. Client is authenticated earlier in request
 
@@ -57,14 +57,14 @@ describe('Granting with client_credentials grant type', function () {
           callback(false, false); // Fake invalid user
         }
       },
-      grants: ['client_credentials']
+      grants: ['clientCredentials']
     });
 
     request(app)
       .post('/oauth/token')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        grant_type: 'client_credentials'
+        grantType: 'clientCredentials'
       })
       .set('Authorization', 'Basic dGhvbTpuaWdodHdvcmxk')
       .expect(400, /client credentials are invalid/i, done);

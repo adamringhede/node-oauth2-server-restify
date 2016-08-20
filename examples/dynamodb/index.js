@@ -8,7 +8,7 @@ app.use(bodyParser());
 
 app.oauth = oauthserver({
   model: require('./model'),
-  grants: ['password', 'refresh_token'],
+  grants: ['password', 'refreshToken'],
   debug: true
 });
 
@@ -19,12 +19,12 @@ app.all('/oauth/token', app.oauth.grant());
 app.get('/oauth/authorise', function (req, res, next) {
   if (!req.session.user) {
     // If they aren't logged in, send them to your own login implementation
-    return res.redirect('/login?redirect=' + req.path + '&client_id=' +
-        req.query.client_id + '&redirect_uri=' + req.query.redirect_uri);
+    return res.redirect('/login?redirect=' + req.path + '&clientId=' +
+        req.query.clientId + '&redirect_uri=' + req.query.redirect_uri);
   }
 
   res.render('authorise', {
-    client_id: req.query.client_id,
+    clientId: req.query.clientId,
     redirect_uri: req.query.redirect_uri
   });
 });
@@ -32,7 +32,7 @@ app.get('/oauth/authorise', function (req, res, next) {
 // Handle authorise
 app.post('/oauth/authorise', function (req, res, next) {
   if (!req.session.user) {
-    return res.redirect('/login?client_id=' + req.query.client_id +
+    return res.redirect('/login?clientId=' + req.query.clientId +
       '&redirect_uri=' + req.query.redirect_uri);
   }
 
@@ -48,7 +48,7 @@ app.post('/oauth/authorise', function (req, res, next) {
 app.get('/login', function (req, res, next) {
   res.render('login', {
     redirect: req.query.redirect,
-    client_id: req.query.client_id,
+    clientId: req.query.clientId,
     redirect_uri: req.query.redirect_uri
   });
 });
@@ -59,24 +59,24 @@ app.post('/login', function (req, res, next) {
   if (req.body.email !== 'thom@nightworld.com') {
     res.render('login', {
       redirect: req.body.redirect,
-      client_id: req.body.client_id,
+      clientId: req.body.clientId,
       redirect_uri: req.body.redirect_uri
     });
   } else {
     // Successful logins should send the user back to the /oauth/authorise
-    // with the client_id and redirect_uri (you could store these in the session)
-    return res.redirect((req.body.redirect || '/home') + '?client_id=' +
-        req.body.client_id + '&redirect_uri=' + req.body.redirect_uri);
+    // with the clientId and redirect_uri (you could store these in the session)
+    return res.redirect((req.body.redirect || '/home') + '?clientId=' +
+        req.body.clientId + '&redirect_uri=' + req.body.redirect_uri);
   }
 });
 
 app.get('/secret', app.oauth.authorise(), function (req, res) {
-  // Will require a valid access_token
+  // Will require a valid accessToken
   res.send('Secret area');
 });
 
 app.get('/public', function (req, res) {
-  // Does not require an access_token
+  // Does not require an accessToken
   res.send('Public area');
 });
 

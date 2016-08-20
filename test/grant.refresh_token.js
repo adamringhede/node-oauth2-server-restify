@@ -25,7 +25,7 @@ var bootstrap = function (oauthConfig) {
   var app = express(),
     oauth = oauth2server(oauthConfig || {
       model: {},
-      grants: ['password', 'refresh_token']
+      grants: ['password', 'refreshToken']
     });
 
   app.set('json spaces', 0);
@@ -38,8 +38,8 @@ var bootstrap = function (oauthConfig) {
   return app;
 };
 
-describe('Granting with refresh_token grant type', function () {
-  it('should detect missing refresh_token parameter', function (done) {
+describe('Granting with refreshToken grant type', function () {
+  it('should detect missing refreshToken parameter', function (done) {
     var app = bootstrap({
       model: {
         getClient: function (id, secret, callback) {
@@ -49,22 +49,22 @@ describe('Granting with refresh_token grant type', function () {
           callback(false, true);
         }
       },
-      grants: ['password', 'refresh_token']
+      grants: ['password', 'refreshToken']
     });
 
     request(app)
       .post('/oauth/token')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        grant_type: 'refresh_token',
-        client_id: 'thom',
-        client_secret: 'nightworld'
+        grantType: 'refreshToken',
+        clientId: 'thom',
+        clientSecret: 'nightworld'
       })
-      .expect(400, /no \\"refresh_token\\" parameter/i, done);
+      .expect(400, /no \\"refreshToken\\" parameter/i, done);
 
   });
 
-  it('should detect invalid refresh_token', function (done) {
+  it('should detect invalid refreshToken', function (done) {
     var app = bootstrap({
       model: {
         getClient: function (id, secret, callback) {
@@ -77,17 +77,17 @@ describe('Granting with refresh_token grant type', function () {
           callback(false, false);
         }
       },
-      grants: ['password', 'refresh_token']
+      grants: ['password', 'refreshToken']
     });
 
     request(app)
       .post('/oauth/token')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        grant_type: 'refresh_token',
-        client_id: 'thom',
-        client_secret: 'nightworld',
-        refresh_token: 'abc123'
+        grantType: 'refreshToken',
+        clientId: 'thom',
+        clientSecret: 'nightworld',
+        refreshToken: 'abc123'
       })
       .expect(400, /invalid refresh token/i, done);
 
@@ -103,20 +103,20 @@ describe('Granting with refresh_token grant type', function () {
           callback(false, true);
         },
         getRefreshToken: function (data, callback) {
-          callback(false, { client_id: 'kate' });
+          callback(false, { clientId: 'kate' });
         }
       },
-      grants: ['password', 'refresh_token']
+      grants: ['password', 'refreshToken']
     });
 
     request(app)
       .post('/oauth/token')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        grant_type: 'refresh_token',
-        client_id: 'thom',
-        client_secret: 'nightworld',
-        refresh_token: 'abc123'
+        grantType: 'refreshToken',
+        clientId: 'thom',
+        clientSecret: 'nightworld',
+        refreshToken: 'abc123'
       })
       .expect(400, /invalid refresh token/i, done);
 
@@ -138,17 +138,17 @@ describe('Granting with refresh_token grant type', function () {
           });
         }
       },
-      grants: ['password', 'refresh_token']
+      grants: ['password', 'refreshToken']
     });
 
     request(app)
       .post('/oauth/token')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        grant_type: 'refresh_token',
-        client_id: 'thom',
-        client_secret: 'nightworld',
-        refresh_token: 'abc123'
+        grantType: 'refreshToken',
+        clientId: 'thom',
+        clientSecret: 'nightworld',
+        refreshToken: 'abc123'
       })
       .expect(400, /refresh token has expired/i, done);
 
@@ -181,19 +181,19 @@ describe('Granting with refresh_token grant type', function () {
           callback();
         }
       },
-      grants: ['password', 'refresh_token']
+      grants: ['password', 'refreshToken']
     });
 
     request(app)
       .post('/oauth/token')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        grant_type: 'refresh_token',
-        client_id: 'thom',
-        client_secret: 'nightworld',
-        refresh_token: 'abc123'
+        grantType: 'refreshToken',
+        clientId: 'thom',
+        clientSecret: 'nightworld',
+        refreshToken: 'abc123'
       })
-      .expect(200, /"access_token":"(.*)",(.*)"refresh_token":"(.*)"/i, done);
+      .expect(200, /"accessToken":"(.*)",(.*)"refreshToken":"(.*)"/i, done);
 
   });
 
@@ -226,19 +226,19 @@ describe('Granting with refresh_token grant type', function () {
           callback();
         }
       },
-      grants: ['password', 'refresh_token']
+      grants: ['password', 'refreshToken']
     });
 
     request(app)
       .post('/oauth/token')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        grant_type: 'refresh_token',
-        client_id: 'thom',
-        client_secret: 'nightworld',
-        refresh_token: 'abc123'
+        grantType: 'refreshToken',
+        clientId: 'thom',
+        clientSecret: 'nightworld',
+        refreshToken: 'abc123'
       })
-      .expect(200, /"access_token":"(.*)",(.*)"refresh_token":"(.*)"/i, done);
+      .expect(200, /"accessToken":"(.*)",(.*)"refreshToken":"(.*)"/i, done);
 
   });
 
@@ -268,19 +268,19 @@ describe('Granting with refresh_token grant type', function () {
           callback();
         }
       },
-      grants: ['password', 'refresh_token']
+      grants: ['password', 'refreshToken']
     });
 
     request(app)
       .post('/oauth/token')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        grant_type: 'refresh_token',
-        client_id: 'thom',
-        client_secret: 'nightworld',
-        refresh_token: 'abc123'
+        grantType: 'refreshToken',
+        clientId: 'thom',
+        clientSecret: 'nightworld',
+        refreshToken: 'abc123'
       })
-      .expect(200, /"access_token":"(.*)",(.*)"refresh_token":"(.*)"/i, done);
+      .expect(200, /"accessToken":"(.*)",(.*)"refreshToken":"(.*)"/i, done);
 
   });
 });

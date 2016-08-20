@@ -28,26 +28,26 @@ describe('OAuth2Error', function() {
     error.name.should.equal('OAuth2Error');
   });
 
-  it('should expose `headers` if error is `invalid_client`', function () {
-    var error = new OAuth2Error('invalid_client');
+  it('should expose `headers` if error is `invalidClient`', function () {
+    var error = new OAuth2Error('invalidClient');
 
     error.headers.should.eql({ 'WWW-Authenticate': 'Basic realm="Service"' });
   });
 
   it('should expose a status `code`', function () {
-    var error = new OAuth2Error('invalid_client');
+    var error = new OAuth2Error('invalidClient');
 
     error.code.should.be.instanceOf(Number);
   });
 
   it('should expose the `error`', function () {
-    var error = new OAuth2Error('invalid_client');
+    var error = new OAuth2Error('invalidClient');
 
-    error.error.should.equal('invalid_client');
+    error.error.should.equal('invalidClient');
   });
 
   it('should expose the `error_description`', function () {
-    var error = new OAuth2Error('invalid_client', 'The access token was not found');
+    var error = new OAuth2Error('invalidClient', 'The access token was not found');
 
     error.error_description.should.equal('The access token was not found');
   });

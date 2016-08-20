@@ -25,7 +25,7 @@ var bootstrap = function (oauthConfig) {
   var app = express(),
     oauth = oauth2server(oauthConfig || {
       model: {},
-      grants: ['password', 'refresh_token']
+      grants: ['password', 'refreshToken']
     });
 
   app.set('json spaces', 0);
@@ -39,9 +39,9 @@ var bootstrap = function (oauthConfig) {
 };
 
 var validBody = {
-  grant_type: 'password',
-  client_id: 'thom',
-  client_secret: 'nightworld',
+  grantType: 'password',
+  clientId: 'thom',
+  clientSecret: 'nightworld',
   username: 'thomseddon',
   password: 'nightworld'
 };
@@ -67,57 +67,57 @@ describe('Grant', function() {
         .expect(400, /application\/x-www-form-urlencoded/i, done);
     });
 
-    it('should check grant_type exists', function (done) {
+    it('should check grantType exists', function (done) {
       var app = bootstrap();
 
       request(app)
         .post('/oauth/token')
         .set('Content-Type', 'application/x-www-form-urlencoded')
-        .expect(400, /invalid or missing grant_type parameter/i, done);
+        .expect(400, /invalid or missing grantType parameter/i, done);
     });
 
-    it('should ensure grant_type is allowed', function (done) {
-      var app = bootstrap({ model: {}, grants: ['refresh_token'] });
+    it('should ensure grantType is allowed', function (done) {
+      var app = bootstrap({ model: {}, grants: ['refreshToken'] });
 
       request(app)
         .post('/oauth/token')
         .set('Content-Type', 'application/x-www-form-urlencoded')
-        .send({ grant_type: 'password' })
-        .expect(400, /invalid or missing grant_type parameter/i, done);
+        .send({ grantType: 'password' })
+        .expect(400, /invalid or missing grantType parameter/i, done);
     });
 
-    it('should check client_id exists', function (done) {
+    it('should check clientId exists', function (done) {
       var app = bootstrap();
 
       request(app)
         .post('/oauth/token')
         .set('Content-Type', 'application/x-www-form-urlencoded')
-        .send({ grant_type: 'password' })
-        .expect(400, /invalid or missing client_id parameter/i, done);
+        .send({ grantType: 'password' })
+        .expect(400, /invalid or missing clientId parameter/i, done);
     });
 
-    it('should check client_id matches regex', function (done) {
+    it('should check clientId matches regex', function (done) {
       var app = bootstrap({
         clientIdRegex: /match/,
         model: {},
-        grants: ['password', 'refresh_token']
+        grants: ['password', 'refreshToken']
       });
 
       request(app)
         .post('/oauth/token')
         .set('Content-Type', 'application/x-www-form-urlencoded')
-        .send({ grant_type: 'password', client_id: 'thom' })
-        .expect(400, /invalid or missing client_id parameter/i, done);
+        .send({ grantType: 'password', clientId: 'thom' })
+        .expect(400, /invalid or missing clientId parameter/i, done);
     });
 
-    it('should check client_secret exists', function (done) {
+    it('should check clientSecret exists', function (done) {
       var app = bootstrap();
 
       request(app)
         .post('/oauth/token')
         .set('Content-Type', 'application/x-www-form-urlencoded')
-        .send({ grant_type: 'password', client_id: 'thom' })
-        .expect(400, /missing client_secret parameter/i, done);
+        .send({ grantType: 'password', clientId: 'thom' })
+        .expect(400, /missing clientSecret parameter/i, done);
     });
 
     it('should extract credentials from body', function (done) {
@@ -135,7 +135,7 @@ describe('Grant', function() {
       request(app)
         .post('/oauth/token')
         .set('Content-Type', 'application/x-www-form-urlencoded')
-        .send({ grant_type: 'password', client_id: 'thom', client_secret: 'nightworld' })
+        .send({ grantType: 'password', clientId: 'thom', clientSecret: 'nightworld' })
         .expect(400, done);
     });
 
@@ -153,12 +153,12 @@ describe('Grant', function() {
 
       request(app)
         .post('/oauth/token')
-        .send('grant_type=password&username=test&password=invalid')
+        .send('grantType=password&username=test&password=invalid')
         .set('Authorization', 'Basic dGhvbTpuaWdodHdvcmxk')
         .expect(400, done);
     });
 
-    it('should detect unsupported grant_type', function (done) {
+    it('should detect unsupported grantType', function (done) {
       var app = bootstrap({
         model: {
           getClient: function (id, secret, callback) {
@@ -168,14 +168,14 @@ describe('Grant', function() {
             callback(false, true);
           }
         },
-        grants: ['refresh_token']
+        grants: ['refreshToken']
       });
 
       request(app)
         .post('/oauth/token')
         .set('Content-Type', 'application/x-www-form-urlencoded')
-        .send({ grant_type: 'password', client_id: 'thom', client_secret: 'nightworld' })
-        .expect(400, /invalid or missing grant_type/i, done);
+        .send({ grantType: 'password', clientId: 'thom', clientSecret: 'nightworld' })
+        .expect(400, /invalid or missing grantType/i, done);
     });
   });
 
@@ -193,7 +193,7 @@ describe('Grant', function() {
       request(app)
         .post('/oauth/token')
         .set('Content-Type', 'application/x-www-form-urlencoded')
-        .send({ grant_type: 'password', client_id: 'thom', client_secret: 'nightworld' })
+        .send({ grantType: 'password', clientId: 'thom', clientSecret: 'nightworld' })
         .expect(400, /client credentials are invalid/i, done);
     });
   });
@@ -215,8 +215,8 @@ describe('Grant', function() {
       request(app)
         .post('/oauth/token')
         .set('Content-Type', 'application/x-www-form-urlencoded')
-        .send({ grant_type: 'password', client_id: 'thom', client_secret: 'nightworld' })
-        .expect(400, /grant type is unauthorised for this client_id/i, done);
+        .send({ grantType: 'password', clientId: 'thom', clientSecret: 'nightworld' })
+        .expect(400, /grant type is unauthorised for this clientId/i, done);
     });
   });
 
@@ -278,7 +278,7 @@ describe('Grant', function() {
         .post('/oauth/token')
         .set('Content-Type', 'application/x-www-form-urlencoded')
         .send(validBody)
-        .expect(200, /"access_token":"thommy"/, done);
+        .expect(200, /"accessToken":"thommy"/, done);
 
     });
   });
@@ -288,7 +288,7 @@ describe('Grant', function() {
       var app = bootstrap({
         model: {
           getClient: function (id, secret, callback) {
-            callback(false, { client_id: 'thom' });
+            callback(false, { clientId: 'thom' });
           },
           grantTypeAllowed: function (clientId, grantType, callback) {
             callback(false, true);
@@ -320,7 +320,7 @@ describe('Grant', function() {
       var app = bootstrap({
         model: {
           getClient: function (id, secret, callback) {
-            callback(false, { client_id: 'thom' });
+            callback(false, { clientId: 'thom' });
           },
           grantTypeAllowed: function (clientId, grantType, callback) {
             callback(false, true);
@@ -340,7 +340,7 @@ describe('Grant', function() {
             cb();
           }
         },
-        grants: ['password', 'refresh_token']
+        grants: ['password', 'refreshToken']
       });
 
       request(app)
@@ -380,10 +380,10 @@ describe('Grant', function() {
         .end(function (err, res) {
           if (err) return done(err);
 
-          res.body.should.have.keys(['access_token', 'token_type', 'expires_in']);
-          res.body.access_token.should.be.instanceOf(String);
-          res.body.access_token.should.have.length(40);
-          res.body.token_type.should.equal('bearer');
+          res.body.should.have.keys(['accessToken', 'tokenType', 'expires_in']);
+          res.body.accessToken.should.be.instanceOf(String);
+          res.body.accessToken.should.have.length(40);
+          res.body.tokenType.should.equal('bearer');
           res.body.expires_in.should.equal(3600);
 
           done();
@@ -391,11 +391,11 @@ describe('Grant', function() {
 
     });
 
-    it('should return an oauth compatible response with refresh_token', function (done) {
+    it('should return an oauth compatible response with refreshToken', function (done) {
       var app = bootstrap({
         model: {
           getClient: function (id, secret, callback) {
-            callback(false, { client_id: 'thom' });
+            callback(false, { clientId: 'thom' });
           },
           grantTypeAllowed: function (clientId, grantType, callback) {
             callback(false, true);
@@ -410,7 +410,7 @@ describe('Grant', function() {
             cb();
           }
         },
-        grants: ['password', 'refresh_token']
+        grants: ['password', 'refreshToken']
       });
 
       request(app)
@@ -421,13 +421,13 @@ describe('Grant', function() {
         .end(function (err, res) {
           if (err) return done(err);
 
-          res.body.should.have.keys(['access_token', 'token_type', 'expires_in',
-            'refresh_token']);
-          res.body.access_token.should.be.instanceOf(String);
-          res.body.access_token.should.have.length(40);
-          res.body.refresh_token.should.be.instanceOf(String);
-          res.body.refresh_token.should.have.length(40);
-          res.body.token_type.should.equal('bearer');
+          res.body.should.have.keys(['accessToken', 'tokenType', 'expires_in',
+            'refreshToken']);
+          res.body.accessToken.should.be.instanceOf(String);
+          res.body.accessToken.should.have.length(40);
+          res.body.refreshToken.should.be.instanceOf(String);
+          res.body.refreshToken.should.have.length(40);
+          res.body.tokenType.should.equal('bearer');
           res.body.expires_in.should.equal(3600);
 
           done();
@@ -456,7 +456,7 @@ describe('Grant', function() {
             cb();
           }
         },
-        grants: ['password', 'refresh_token'],
+        grants: ['password', 'refreshToken'],
         accessTokenLifetime: null,
         refreshTokenLifetime: null
       });
@@ -469,12 +469,12 @@ describe('Grant', function() {
         .end(function (err, res) {
           if (err) return done(err);
 
-          res.body.should.have.keys(['access_token', 'refresh_token', 'token_type']);
-          res.body.access_token.should.be.instanceOf(String);
-          res.body.access_token.should.have.length(40);
-          res.body.refresh_token.should.be.instanceOf(String);
-          res.body.refresh_token.should.have.length(40);
-          res.body.token_type.should.equal('bearer');
+          res.body.should.have.keys(['accessToken', 'refreshToken', 'tokenType']);
+          res.body.accessToken.should.be.instanceOf(String);
+          res.body.accessToken.should.have.length(40);
+          res.body.refreshToken.should.be.instanceOf(String);
+          res.body.refreshToken.should.have.length(40);
+          res.body.tokenType.should.equal('bearer');
 
           done();
         });

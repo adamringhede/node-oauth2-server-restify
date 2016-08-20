@@ -12,7 +12,7 @@ var memorystore = require('model.js');
 
 app.oauth = oauthserver({
   model: memorystore,
-  grants: ['password','refresh_token'],
+  grants: ['password','refreshToken'],
   debug: true
 });
 

@@ -25,7 +25,7 @@ var bootstrap = function (oauthConfig) {
   var app = express(),
     oauth = oauth2server(oauthConfig || {
       model: {},
-      grants: ['password', 'refresh_token']
+      grants: ['password', 'refreshToken']
     });
 
   app.set('json spaces', 0);
@@ -56,14 +56,14 @@ describe('Granting with extended grant type', function () {
       .post('/oauth/token')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        grant_type: 'http://custom.com',
-        client_id: 'thom',
-        client_secret: 'nightworld'
+        grantType: 'http://custom.com',
+        clientId: 'thom',
+        clientSecret: 'nightworld'
       })
-      .expect(400, /invalid grant_type/i, done);
+      .expect(400, /invalid grantType/i, done);
   });
 
-  it('should still detect unsupported grant_type', function (done) {
+  it('should still detect unsupported grantType', function (done) {
     var app = bootstrap({
       model: {
         getClient: function (id, secret, callback) {
@@ -83,11 +83,11 @@ describe('Granting with extended grant type', function () {
       .post('/oauth/token')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        grant_type: 'http://custom.com',
-        client_id: 'thom',
-        client_secret: 'nightworld'
+        grantType: 'http://custom.com',
+        clientId: 'thom',
+        clientSecret: 'nightworld'
       })
-      .expect(400, /invalid grant_type/i, done);
+      .expect(400, /invalid grantType/i, done);
   });
 
   it('should require a user.id', function (done) {
@@ -110,9 +110,9 @@ describe('Granting with extended grant type', function () {
       .post('/oauth/token')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        grant_type: 'http://custom.com',
-        client_id: 'thom',
-        client_secret: 'nightworld'
+        grantType: 'http://custom.com',
+        clientId: 'thom',
+        clientSecret: 'nightworld'
       })
       .expect(400, /invalid request/i, done);
   });
@@ -140,9 +140,9 @@ describe('Granting with extended grant type', function () {
       .post('/oauth/token')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        grant_type: 'http://custom.com',
-        client_id: 'thom',
-        client_secret: 'nightworld'
+        grantType: 'http://custom.com',
+        clientId: 'thom',
+        clientSecret: 'nightworld'
       })
       .expect(200, done);
   });

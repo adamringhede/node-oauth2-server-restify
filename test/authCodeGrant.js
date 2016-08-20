@@ -51,7 +51,7 @@ describe('AuthCodeGrant', function() {
 
     request(app)
       .post('/authorise')
-      .expect(400, /invalid response_type parameter/i, done);
+      .expect(400, /invalid responseType parameter/i, done);
   });
 
   it('should detect invalid response type', function (done) {
@@ -59,17 +59,17 @@ describe('AuthCodeGrant', function() {
 
     request(app)
       .post('/authorise')
-      .send({ response_type: 'token' })
-      .expect(400, /invalid response_type parameter/i, done);
+      .send({ responseType: 'token' })
+      .expect(400, /invalid responseType parameter/i, done);
   });
 
-  it('should detect no client_id', function (done) {
+  it('should detect no clientId', function (done) {
     var app = bootstrap();
 
     request(app)
       .post('/authorise')
-      .send({ response_type: 'code' })
-      .expect(400, /invalid or missing client_id parameter/i, done);
+      .send({ responseType: 'code' })
+      .expect(400, /invalid or missing clientId parameter/i, done);
   });
 
   it('should detect no redirect_uri', function (done) {
@@ -78,8 +78,8 @@ describe('AuthCodeGrant', function() {
     request(app)
       .post('/authorise')
       .send({
-        response_type: 'code',
-        client_id: 'thom'
+        responseType: 'code',
+        clientId: 'thom'
       })
       .expect(400, /invalid or missing redirect_uri parameter/i, done);
   });
@@ -94,8 +94,8 @@ describe('AuthCodeGrant', function() {
     request(app)
       .post('/authorise')
       .send({
-        response_type: 'code',
-        client_id: 'thom',
+        responseType: 'code',
+        clientId: 'thom',
         redirect_uri: 'http://nightworld.com'
       })
       .expect('WWW-Authenticate', 'Basic realm="Service"')
@@ -115,8 +115,8 @@ describe('AuthCodeGrant', function() {
     request(app)
       .post('/authorise')
       .send({
-        response_type: 'code',
-        client_id: 'thom',
+        responseType: 'code',
+        clientId: 'thom',
         redirect_uri: 'http://wrong.com'
       })
       .expect(400, /redirect_uri does not match/i, done);
@@ -135,8 +135,8 @@ describe('AuthCodeGrant', function() {
     request(app)
       .post('/authorise')
       .send({
-        response_type: 'code',
-        client_id: 'thom',
+        responseType: 'code',
+        clientId: 'thom',
         redirect_uri: 'http://wrong.com'
       })
       .expect(400, /redirect_uri does not match/i, done);
@@ -155,8 +155,8 @@ describe('AuthCodeGrant', function() {
     request(app)
       .post('/authorise')
       .send({
-        response_type: 'code',
-        client_id: 'thom',
+        responseType: 'code',
+        clientId: 'thom',
         redirect_uri: 'http://nightworld.com'
       })
       .expect(302, /Moved temporarily/i, done);
@@ -175,8 +175,8 @@ describe('AuthCodeGrant', function() {
     request(app)
       .post('/authorise')
       .send({
-        response_type: 'code',
-        client_id: 'thom',
+        responseType: 'code',
+        clientId: 'thom',
         redirect_uri: 'http://nightworld.com'
       })
       .expect(302, /Moved temporarily/i, done);
@@ -195,8 +195,8 @@ describe('AuthCodeGrant', function() {
     request(app)
       .post('/authorise')
       .send({
-        response_type: 'code',
-        client_id: 'thom',
+        responseType: 'code',
+        clientId: 'thom',
         redirect_uri: 'http://nightworld.com'
       })
       .expect(302,
@@ -223,8 +223,8 @@ describe('AuthCodeGrant', function() {
     request(app)
       .post('/authorise')
       .send({
-        response_type: 'code',
-        client_id: 'thom',
+        responseType: 'code',
+        clientId: 'thom',
         redirect_uri: 'http://nightworld.com'
       })
       .end();
@@ -250,8 +250,8 @@ describe('AuthCodeGrant', function() {
     request(app)
       .post('/authorise')
       .send({
-        response_type: 'code',
-        client_id: 'thom',
+        responseType: 'code',
+        clientId: 'thom',
         redirect_uri: 'http://nightworld.com'
       })
       .expect(302, function (err, res) {
@@ -280,8 +280,8 @@ describe('AuthCodeGrant', function() {
     request(app)
       .get('/authorise')
       .query({
-        response_type: 'code',
-        client_id: 'thom',
+        responseType: 'code',
+        clientId: 'thom',
         redirect_uri: 'http://nightworld.com'
       })
       .expect(302, function (err, res) {
@@ -310,8 +310,8 @@ describe('AuthCodeGrant', function() {
     request(app)
       .get('/authorise')
       .query({
-        response_type: 'code',
-        client_id: 'thom',
+        responseType: 'code',
+        clientId: 'thom',
         redirect_uri: 'http://nightworld.com',
         state: 'some_state'
       })
@@ -342,8 +342,8 @@ describe('AuthCodeGrant', function() {
     request(app)
       .post('/authorise')
       .send({
-        response_type: 'code',
-        client_id: 'thom',
+        responseType: 'code',
+        clientId: 'thom',
         redirect_uri: 'http://nightworld.com'
       })
       .end(function (err, res) {
@@ -371,8 +371,8 @@ describe('AuthCodeGrant', function() {
     request(app)
       .post('/authorise')
       .send({
-        response_type: 'code',
-        client_id: 'thom',
+        responseType: 'code',
+        clientId: 'thom',
         redirect_uri: 'http://nightworld.com'
       })
       .end(function (err, res) {

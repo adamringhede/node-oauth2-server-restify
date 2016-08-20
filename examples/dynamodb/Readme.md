@@ -13,7 +13,7 @@ For example:
 
 app.oauth = oauthserver({
   model: require('./model'),
-  grants: ['password', 'refresh_token'],
+  grants: ['password', 'refreshToken'],
   debug: true
 });
 

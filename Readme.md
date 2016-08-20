@@ -43,7 +43,7 @@ Note: As no model was actually implemented here, delving any deeper, i.e. passin
 
 ## Features
 
-- Supports authorization_code, password, refresh_token, client_credentials and extension (custom) grant types
+- Supports authorizationCode, password, refreshToken, clientCredentials and extension (custom) grant types
 - Implicitly supports any form of storage e.g. PostgreSQL, MySQL, Mongo, Redis...
 - Full test suite
 
@@ -52,7 +52,7 @@ Note: As no model was actually implemented here, delving any deeper, i.e. passin
 - *string* **model**
  - Model object (see below)
 - *array* **grants**
- - grant types you wish to support, currently the module supports `password` and `refresh_token`
+ - grant types you wish to support, currently the module supports `password` and `refreshToken`
   - Default: `[]`
 - *function|boolean* **debug**
  - If `true` errors will be  logged to console. You may also pass a custom function, in which case that function will be called with the error as it's first argument
@@ -132,7 +132,7 @@ Note: see https://github.com/thomseddon/node-oauth2-server/tree/master/examples/
      - Truthy to indicate an error
 
 
-### Required for `authorization_code` grant type
+### Required for `authorizationCode` grant type
 
 #### getAuthCode (authCode, callback)
 - *string* **authCode**
@@ -174,7 +174,7 @@ Note: see https://github.com/thomseddon/node-oauth2-server/tree/master/examples/
      - Must contain the following keys:
          - *string|number* **id**
 
-### Required for `refresh_token` grant type
+### Required for `refreshToken` grant type
 
 #### saveRefreshToken (refreshToken, clientId, expires, user, callback)
 - *string* **refreshToken**
@@ -230,7 +230,7 @@ The spec does not actually require that you revoke the old token - hence this is
      - Must contain the following keys:
          - *string|number* **id**
 
-### Required for `client_credentials` grant type
+### Required for `clientCredentials` grant type
 
 #### getUserFromClient (clientId, clientSecret, callback)
 - *string* **clientId**
@@ -270,7 +270,7 @@ You can access the grant type via the first argument and you should pass back su
 First you must insert client id/secret and user into storage. This is out of the scope of this example.
 
 To obtain a token you should POST to `/oauth/token`. You should include your client credentials in
-the Authorization header ("Basic " + client_id:client_secret base64'd), and then grant_type ("password"),
+the Authorization header ("Basic " + clientId:clientSecret base64'd), and then grantType ("password"),
 username and password in the request body, for example:
 
 ```
@@ -279,7 +279,7 @@ Host: server.example.com
 Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
 Content-Type: application/x-www-form-urlencoded
 
-grant_type=password&username=johndoe&password=A3ddj3w
+grantType=password&username=johndoe&password=A3ddj3w
 ```
 This will then call the following on your model (in this order):
  - getClient (clientId, clientSecret, callback)
@@ -288,7 +288,7 @@ This will then call the following on your model (in this order):
  - saveAccessToken (accessToken, clientId, expires, user, callback)
  - saveRefreshToken (refreshToken, clientId, expires, user, callback) **(if using)**
 
-Provided there weren't any errors, this will return the following (excluding the `refresh_token` if you've not enabled the refresh_token grant type):
+Provided there weren't any errors, this will return the following (excluding the `refreshToken` if you've not enabled the refreshToken grant type):
 
 ```
 HTTP/1.1 200 OK
@@ -297,10 +297,10 @@ Cache-Control: no-store
 Pragma: no-cache
 
 {
-  "access_token":"2YotnFZFEjr1zCsicMWpAA",
-  "token_type":"bearer",
+  "accessToken":"2YotnFZFEjr1zCsicMWpAA",
+  "tokenType":"bearer",
   "expires_in":3600,
-  "refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA"
+  "refreshToken":"tGzv3JOkF0XG5Qx2TlKWIA"
 }
 ```
 

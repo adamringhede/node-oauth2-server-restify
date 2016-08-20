@@ -65,7 +65,7 @@ describe('Authorise', function() {
     var app = bootstrap('mockValid');
 
     request(app)
-      .get('/?access_token=thom')
+      .get('/?accessToken=thom')
       .expect(200, /nightworld/, done);
   });
 
@@ -75,7 +75,7 @@ describe('Authorise', function() {
 
     request(app)
       .post('/')
-      .send({ access_token: 'thom' })
+      .send({ accessToken: 'thom' })
       .expect(400, /content type must be application\/x-www-form-urlencoded/i,
         done);
   });
@@ -86,7 +86,7 @@ describe('Authorise', function() {
     request(app)
       .get('/')
       .set('Content-Type', 'application/x-www-form-urlencoded')
-      .send({ access_token: 'thom' })
+      .send({ accessToken: 'thom' })
       .expect(400, /method cannot be GET/i, done);
   });
 
@@ -96,7 +96,7 @@ describe('Authorise', function() {
     request(app)
       .post('/')
       .set('Content-Type', 'application/x-www-form-urlencoded')
-      .send({ access_token: 'thom' })
+      .send({ accessToken: 'thom' })
       .expect(200, /nightworld/, done);
   });
 
@@ -122,7 +122,7 @@ describe('Authorise', function() {
     var app = bootstrap('mockValid');
 
     request(app)
-      .get('/?access_token=thom')
+      .get('/?accessToken=thom')
       .set('Authorization', 'Invalid')
       .expect(400, /only one method may be used/i, done);
   });
@@ -131,9 +131,9 @@ describe('Authorise', function() {
     var app = bootstrap('mockValid');
 
     request(app)
-      .post('/?access_token=thom')
+      .post('/?accessToken=thom')
       .send({
-        access_token: 'thom'
+        accessToken: 'thom'
       })
       .expect(400, /only one method may be used/i, done);
   });
@@ -142,9 +142,9 @@ describe('Authorise', function() {
     var app = bootstrap('mockValid');
 
     request(app)
-      .post('/?access_token=thom')
+      .post('/?accessToken=thom')
       .send({
-        access_token: ''
+        accessToken: ''
       })
       .expect(400, /only one method may be used/i, done);
   });
@@ -159,7 +159,7 @@ describe('Authorise', function() {
     });
 
     request(app)
-      .get('/?access_token=thom')
+      .get('/?accessToken=thom')
       .expect(401, /the access token provided has expired/i, done);
   });
 
@@ -181,7 +181,7 @@ describe('Authorise', function() {
     app.use(app.oauth.errorHandler());
 
     request(app)
-      .get('/?access_token=thom')
+      .get('/?accessToken=thom')
       .expect(200, /nightworld/, done);
   });
 
@@ -206,7 +206,7 @@ describe('Authorise', function() {
     app.use(app.oauth.errorHandler());
 
     request(app)
-      .get('/?access_token=thom')
+      .get('/?accessToken=thom')
       .expect(200, /nightworld/, done);
   });
 
@@ -233,7 +233,7 @@ describe('Authorise', function() {
     app.use(app.oauth.errorHandler());
 
     request(app)
-      .get('/?access_token=thom')
+      .get('/?accessToken=thom')
       .expect(200, /nightworld/, done);
   });
 
